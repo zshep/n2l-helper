@@ -1,10 +1,18 @@
 import { ForceVector } from '../types/physics';
 
+function isNearZero(num: number, tolerance: number = 1e-6): boolean {
+  return Math.abs(num) < tolerance;
+}
+
 export function decomposeVector(force: ForceVector): { fx: number; fy: number } {
   const radians = force.angleDegrees * (Math.PI / 180);
   const fx = force.mangitude * Math.cos(radians);
   const fy = force.mangitude * Math.sin(radians);
-  return { fx, fy };
+
+  return {
+    fx: isNearZero(fx) ? 0 : fx,
+    fy: isNearZero(fy) ? 0 : fy
+  };
 }
 
 export function generateNewtonsEquations(forces: ForceVector[], mass?: number): { latexX: string; latexY: string } {
