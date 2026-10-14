@@ -8,9 +8,7 @@ export function decomposeVector(force: ForceVector): { fx: number; fy: number } 
 }
 
 export function generateNewtonsEquations(forces: ForceVector[], mass?: number): { latexX: string; latexY: string } {
-  if (!mass) {
-    throw new Error('Mass must be provided to generate Newton\'s equations');
-  }
+  const effectiveMass = mass !== undefined ? mass : 1;
 
   let sumFx = 0;
   let sumFy = 0;
