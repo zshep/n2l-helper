@@ -91,6 +91,7 @@ const FBDCanvas: React.FC = () => {
   };
 
   return (
+    
     <svg
       ref={canvasRef}
       width="800"
@@ -112,6 +113,8 @@ const FBDCanvas: React.FC = () => {
         />
       )}
     </svg>
+    
+    
   );
 };
 
