@@ -1,12 +1,5 @@
 import React, { useRef, useState } from 'react';
-
-interface ForceVector {
-  id: string;
-  label: string;
-  mangitude: number;
-  angleDegrees: number;
-  color?: string;
-}
+import { ForceVector } from '../utils/physics';
 
 const FBDCanvas: React.FC = () => {
   const canvasRef = useRef<SVGSVGElement | null>(null);
