@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { decomposeVector } from '../utils/physics';
+import { type ForceVector } from '../types/physics';
 
 describe('decomposeVector', () => {
   it('should decompose a horizontal 10 N force at 0 degrees', () => {
