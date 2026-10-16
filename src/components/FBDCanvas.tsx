@@ -40,7 +40,7 @@ const FBDCanvas: React.FC = () => {
       const offsetY = clientY - rect?.top!;
 
       if (draggingPoint === 'origin') {
-        setOrigin({ x: offsetX, y: offsetY });
+        // Origin is fixed, so we do not update the state here.
       } else if (draggingPoint === 'start' && arrow) {
         setArrow({ ...arrow, start: { x: offsetX, y: offsetY } });
       } else if (draggingPoint === 'end' && arrow) {
