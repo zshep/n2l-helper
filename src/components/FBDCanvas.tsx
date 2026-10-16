@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 
 const FBDCanvas: React.FC = () => {
   const canvasRef = useRef<SVGSVGElement | null>(null);
-  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 400, y: 300 });
   const [arrow, setArrow] = useState<{ start: { x: number; y: number }; end: { x: number; y: number } } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [draggingPoint, setDraggingPoint] = useState<'origin' |'start' | 'end' | null>(null);
