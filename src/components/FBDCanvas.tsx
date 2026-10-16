@@ -81,11 +81,13 @@ const FBDCanvas: React.FC = () => {
     const offsetX = clientX - rect?.left!;
     const offsetY = clientY - rect?.top!;
 
+    const isNearOrigin = offsetX >= origin.x - 10 && offsetX <= origin.x + 10 && offsetY >= origin.y - 10 && offsetY <= origin.y + 10;
+
     if (arrow) {
       const { start, end } = arrow;
       const newArrow = calculateArrow(start, { x: offsetX, y: offsetY });
       setArrow(newArrow);
-    } else {
+    } else if (isNearOrigin) {
       setArrow({ start: { x: origin.x, y: origin.y }, end: { x: offsetX, y: offsetY } });
     }
   };
