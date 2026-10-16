@@ -6,7 +6,7 @@ const FBDCanvas: React.FC = () => {
   const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [arrow, setArrow] = useState<{ start: { x: number; y: number }; end: { x: number; y: number } } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [draggingPoint, setDraggingPoint] = useState<'start' | 'end' | null>(null);
+  const [draggingPoint, setDraggingPoint] = useState<'origin' |'start' | 'end' | null>(null);
 
   const handleMouseDown = (event: React.MouseEvent<SVGSVGElement>) => {
     const { clientX, clientY } = event;
