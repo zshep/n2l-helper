@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ForceVector } from '../utils/physics';
+
 
 const FBDCanvas: React.FC = () => {
   const canvasRef = useRef<SVGSVGElement | null>(null);
