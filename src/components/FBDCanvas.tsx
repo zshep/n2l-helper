@@ -101,7 +101,32 @@ const FBDCanvas: React.FC = () => {
       onMouseUp={handleMouseUp}
       onClick={handleCreateArrow}
     >
+      {/* Grid Lines */}
+      {/* Vertical lines */}
+      {Array.from({ length: 10 }, (_, i) => (
+        <line
+          key={`v-${i}`}
+          x={origin.x - 10 * i}
+          y="0"
+          stroke="gray"
+          strokeWidth="1"
+        />
+      ))}
+      {/* Horizontal lines */}
+      {Array.from({ length: 10 }, (_, i) => (
+        <line
+          key={`h-${i}`}
+          x="0"
+          y={origin.y - 10 * i}
+          stroke="gray"
+          strokeWidth="1"
+        />
+      ))}
+
+      {/* Origin Circle */}
       <circle cx={origin.x} cy={origin.y} r="10" fill="red" />
+      
+      {/* Arrow */}
       {arrow && (
         <line
           x1={arrow.start.x}
