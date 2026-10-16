@@ -108,7 +108,7 @@ const FBDCanvas: React.FC = () => {
           key={`v-${i}`}
           x={origin.x - 10 * i}
           y="0"
-          stroke="gray"
+          stroke="white"
           strokeWidth="1"
         />
       ))}
@@ -118,7 +118,7 @@ const FBDCanvas: React.FC = () => {
           key={`h-${i}`}
           x="0"
           y={origin.y - 10 * i}
-          stroke="gray"
+          stroke="white"
           strokeWidth="1"
         />
       ))}
