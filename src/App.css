@@ -5,10 +5,12 @@
   box-sizing: border-box;
 }
 
-/* Remove or adjust styles related to #center if it was causing unwanted centering */
-/* The previous #center styles are removed/replaced by the new structure */
-
 /* Ensure no background colors are applied if they were implicitly set */
 body {
   background-color: white; /* Assuming a light background is desired, or remove if truly transparent */
+}
+
+.app-container h1,
+.app-container p {
+  color: green;
 }
