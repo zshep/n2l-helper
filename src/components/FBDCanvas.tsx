@@ -96,7 +96,8 @@ const FBDCanvas: React.FC = () => {
     
     <svg
       ref={canvasRef}
-      // Removed fixed width/height to allow CSS to control size and centering
+      width="100%"
+      height="100%"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
