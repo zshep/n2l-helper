@@ -3,10 +3,15 @@ import React, { useRef, useState } from 'react';
 
 const FBDCanvas: React.FC = () => {
   const canvasRef = useRef<SVGSVGElement | null>(null);
-  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 400, y: 300 });
   const [arrow, setArrow] = useState<{ start: { x: number; y: number }; end: { x: number; y: number } } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [draggingPoint, setDraggingPoint] = useState<'origin' |'start' | 'end' | null>(null);
+  const [draggingPoint, setDraggingPoint] = useState<'start' | 'end' | null>(null);
+
+  // We need a reference point for the grid lines. Since the origin circle is removed,
+  // we'll use a default or assume the grid is relative to the canvas bounds if possible,
+  // but based on the previous implementation, we need some reference coordinates.
+  // Let's keep a default origin for the grid lines to be visible, perhaps the center of the SVG.
+  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 50, y: 50 }); // Default origin for grid reference
 
   const handleMouseDown = (event: React.MouseEvent<SVGSVGElement>) => {
     const { clientX, clientY } = event;
@@ -14,6 +19,7 @@ const FBDCanvas: React.FC = () => {
     const offsetX = clientX - rect?.left!;
     const offsetY = clientY - rect?.top!;
 
+    // Check if click is near the origin point (for dragging origin)
     if (offsetX >= origin.x - 10 && offsetX <= origin.x + 10 && offsetY >= origin.y - 10 && offsetY <= origin.y + 10) {
       setIsDragging(true);
       setDraggingPoint('origin');
@@ -125,9 +131,6 @@ const FBDCanvas: React.FC = () => {
         />
       ))}
 
-      {/* Origin Circle */}
-      <circle cx={origin.x} cy={origin.y} r="10" fill="red" />
-      
       {/* Arrow */}
       {arrow && (
         <line
