@@ -9,9 +9,9 @@ const FBDCanvas: React.FC = () => {
         {Array.from({ length: 10 }).map((_, i) => (                                                                                           
           <line                                                                                                                               
             key={`v-${i}`}                                                                                                                    
-            x1={`${i * 50}%`}                                                                                                           
+            x1={`${i * 100/10}%`}                                                                                                           
             y1="0"                                                                                                                           
-            x2={`${i * 50}%`}                                                                                                           
+            x2={`${i * 100/10}%`}                                                                                                           
             y2="100%"                                                                                                                         
             stroke="black"                                                                                                                    
             strokeWidth="1"                                                                                                                   
@@ -22,9 +22,9 @@ const FBDCanvas: React.FC = () => {
           <line                                                                                                                               
             key={`h-${i}`}                                                                                                                    
             x1="0"                                                                                                                           
-            y1={`${i * 40}%`}                                                                                                           
+            y1={`${i * 100/10}%`}                                                                                                           
             x2="100%"                                                                                                                         
-            y2={`${i * 40}%`}                                                                                                           
+            y2={`${i * 100/10}%`}                                                                                                           
             stroke="black"                                                                                                                    
             strokeWidth="1"                                                                                                                   
           />                                                                                                                                  
