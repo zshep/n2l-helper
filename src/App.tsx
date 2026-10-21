@@ -10,7 +10,10 @@ function App() {
           Convert a free body diagram to Newton's 2nd Law Equation
         </p>
       </div>
+      
       <FBDCanvas />
+
+      
     </>
   );
 }

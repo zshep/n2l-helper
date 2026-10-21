@@ -1,4 +1,4 @@
-import { ForceVector } from '../types/physics';
+import type { ForceVector } from '../types/physics';
 
 function isNearZero(num: number, tolerance: number = 1e-6): boolean {
   return Math.abs(num) < tolerance;

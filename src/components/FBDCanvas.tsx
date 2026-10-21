@@ -29,8 +29,8 @@ const FBDCanvas: React.FC = () => {
             strokeWidth="1"                                                                                                                   
           />                                                                                                                                  
         ))}                                                                                                                                   
-        {/* Origin dot at intersection of 5th column (index 4) and 5th row (index 4) */}                                                              
-        <circle cx="40%" cy="40%" r="5" fill="blue" />
+        {/* Origin dot at middle of grid */}                                                              
+        <circle cx="50%" cy="50%" r="10" fill="blue" />
       </svg>                      
       {/* Content will be added here */}
     </div>
