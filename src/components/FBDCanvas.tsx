@@ -5,19 +5,17 @@ const FBDCanvas: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
   const [currentArrow, setCurrentArrow] = useState<ForceVector | null>(null);
+  const [legend, setLegend] = useState<{ label: string; color: string }[]>([]);
 
   const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
     const svgRect = e.currentTarget.getBoundingClientRect();
     const svgX = e.clientX - svgRect.left;
     const svgY = e.clientY - svgRect.top;
 
-    // Check if the click is near the origin (50%, 50% of the SVG)
+    // Check if the click is near the origin (Center of the SVG: 250, 200)
     const originX = 250; // 500 /2
     const originY = 200;  // 400 /2 
-    const tolerance = 10; // Tolerance for clicking the origin dot
-
-    //console.log(`Mouse position: (${svgX.toFixed(2)}, ${svgY.toFixed(2)})`);                                                                                                
-    //console.log(`Origin check: |${svgX} - ${originX}| < ${tolerance} AND |${svgY} - ${originY}| < ${tolerance}`);  
+    const tolerance = 20; // Tolerance for clicking the origin dot
 
     if (Math.abs(svgX - originX) < tolerance && Math.abs(svgY - originY) < tolerance) {
       setIsDragging(true);
@@ -63,13 +61,19 @@ const FBDCanvas: React.FC = () => {
         mangitude: currentArrow.mangitude,
         angleDegrees: currentArrow.angleDegrees,
         color: currentArrow.color,
-        // We can optionally store the coordinates if needed for rendering context, but the vector properties are the core data.
       };
       setCurrentArrow(finalVector);
+      
+      // Add to legend
+      setLegend(prevLegend => [...prevLegend, { label: finalVector.label, color: finalVector.color }]);
     } else {
       setCurrentArrow(null);
     }
   };
+
+  const deleteLegendItem = useCallback((index: number) => {
+    setLegend(prevLegend => prevLegend.filter((_, i) => i !== index));
+  }, []);
 
   return (
     <div className="app-container">
@@ -117,7 +121,21 @@ const FBDCanvas: React.FC = () => {
           />
         )}
       </svg>
-      {/* Content will be added here */}
+      
+      {/* Legend */}
+      <div className="legend">
+        <h3>Force Vector Legend</h3>
+        {legend.length === 0 ? (
+          <p>No force vectors drawn yet.</p>
+        ) : (
+          legend.map((item, index) => (
+            <div key={index} className="legend-item">
+              <span style={{ color: item.color }}>{item.label}</span>
+              <button onClick={() => deleteLegendItem(index)} className="delete-btn">X</button>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
