@@ -5,7 +5,8 @@ const FBDCanvas: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
   const [currentArrow, setCurrentArrow] = useState<ForceVector | null>(null);
-  const [legend, setLegend] = useState<{ label: string; color: string }[]>([]);
+  const [legend, setLegend] = useState<{ label: string; color: string; magnitude: number; angleDegrees: number }[]>([]);
+  const [arrows, setArrows] = useState<{ id: string; x1: number; y1: number; x2: number; y2: number; color: string; datavalue: string }[]>([]);
 
   const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
     const svgRect = e.currentTarget.getBoundingClientRect();
@@ -37,7 +38,7 @@ const FBDCanvas: React.FC = () => {
     // Create the arrow based on the drag movement
     setCurrentArrow({
       id: 'temp', // Temporary ID, will be finalized on mouse up
-      label: 'Drag',
+      label: 'F_app',
       mangitude: Math.sqrt(Math.pow(currentX - startPoint.x, 2) + Math.pow(currentY - startPoint.y, 2)),
       angleDegrees: Math.atan2(currentY - startPoint.y, currentX - startPoint.x) * (180 / Math.PI),
       color: 'red',
@@ -57,7 +58,7 @@ const FBDCanvas: React.FC = () => {
       // Finalize the vector data based on the drag operation
       const finalVector: ForceVector = {
         id: `force_${Date.now()}`, // Unique ID
-        label: `Vector (${currentArrow.x2 - currentArrow.x1.toFixed(2)}, ${currentArrow.y2 - currentArrow.y1.toFixed(2)})`,
+        label: currentArrow.label,
         mangitude: currentArrow.mangitude,
         angleDegrees: currentArrow.angleDegrees,
         color: currentArrow.color,
@@ -65,7 +66,7 @@ const FBDCanvas: React.FC = () => {
       setCurrentArrow(finalVector);
       
       // Add to legend
-      setLegend(prevLegend => [...prevLegend, { label: finalVector.label, color: finalVector.color }]);
+      setLegend(prevLegend => [...prevLegend, { label: finalVector.label, color: finalVector.color, magnitude: finalVector.magnitude  }]);
     } else {
       setCurrentArrow(null);
     }
@@ -130,7 +131,7 @@ const FBDCanvas: React.FC = () => {
         ) : (
           legend.map((item, index) => (
             <div key={index} className="legend-item">
-              <span style={{ color: item.color }}>{item.label}</span>
+              <span style={{ color: item.color }}>{item.label}{item.magnitude}</span>
               <button onClick={() => deleteLegendItem(index)} className="delete-btn">X</button>
             </div>
           ))

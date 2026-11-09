@@ -1,7 +1,7 @@
 export interface ForceVector {
   id: string;
   label: string;        // e.g "F_g", "F_N", "F_T", "F_f"
-  mangitude: number;    // not sure if I want number
+  magnitude: number;    // not sure if I want number
   angleDegrees: number; //would be ok if angle is just theta
   color?: string;
 }
