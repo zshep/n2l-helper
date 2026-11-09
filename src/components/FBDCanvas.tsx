@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ForceVector } from '../types/physics';
+import { type ForceVector } from '../types/physics';
 
 const FBDCanvas: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -12,14 +12,20 @@ const FBDCanvas: React.FC = () => {
     const svgY = e.clientY - svgRect.top;
 
     // Check if the click is near the origin (50%, 50% of the SVG)
-    const originX = 50;
-    const originY = 50;
-    const tolerance = 10; // Tolerance for clicking the origin dot
+    const originX = 250;
+    const originY = 250;
+    const tolerance = 20; // Tolerance for clicking the origin dot
+
+    console.log(`Mouse position: (${svgX.toFixed(2)}, ${svgY.toFixed(2)})`);                                                                                                
+    console.log(`Origin check: |${svgX} - ${originX}| < ${tolerance} AND |${svgY} - ${originY}| < ${tolerance}`);  
 
     if (Math.abs(svgX - originX) < tolerance && Math.abs(svgY - originY) < tolerance) {
       setIsDragging(true);
       setStartPoint({ x: svgX, y: svgY });
       setCurrentArrow(null); // Clear previous arrow
+    }
+    else {
+      console.log("not within tolerance")
     }
   };
 
