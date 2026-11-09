@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
+import { ForceVector } from '../types/physics';
 
 const FBDCanvas: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
-  const [currentArrow, setCurrentArrow] = useState<any>(null);
+  const [currentArrow, setCurrentArrow] = useState<ForceVector | null>(null);
 
   const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
     const svgRect = e.currentTarget.getBoundingClientRect();
@@ -31,6 +32,12 @@ const FBDCanvas: React.FC = () => {
 
     // Create the arrow based on the drag movement
     setCurrentArrow({
+      id: 'temp', // Temporary ID, will be finalized on mouse up
+      label: 'Drag',
+      mangitude: Math.sqrt(Math.pow(currentX - startPoint.x, 2) + Math.pow(currentY - startPoint.y, 2)),
+      angleDegrees: Math.atan2(currentY - startPoint.y, currentX - startPoint.x) * (180 / Math.PI),
+      color: 'red',
+      // We store the coordinates for drawing, but the final ForceVector will be calculated/stored in handleMouseUp
       x1: startPoint.x,
       y1: startPoint.y,
       x2: currentX,
@@ -41,9 +48,21 @@ const FBDCanvas: React.FC = () => {
   const handleMouseUp = (e: React.MouseEvent<SVGSVGElement>) => {
     if (!isDragging) return;
     setIsDragging(false);
-    // Optionally, you might want to finalize the arrow data here and store it in state
-    // For this implementation, we just stop dragging.
-    setCurrentArrow(null);
+
+    if (currentArrow) {
+      // Finalize the vector data based on the drag operation
+      const finalVector: ForceVector = {
+        id: `force_${Date.now()}`, // Unique ID
+        label: `Vector (${currentArrow.x2 - currentArrow.x1.toFixed(2)}, ${currentArrow.y2 - currentArrow.y1.toFixed(2)})`,
+        mangitude: currentArrow.mangitude,
+        angleDegrees: currentArrow.angleDegrees,
+        color: currentArrow.color,
+        // We can optionally store the coordinates if needed for rendering context, but the vector properties are the core data.
+      };
+      setCurrentArrow(finalVector);
+    } else {
+      setCurrentArrow(null);
+    }
   };
 
   return (
@@ -87,7 +106,7 @@ const FBDCanvas: React.FC = () => {
             y1={currentArrow.y1}
             x2={currentArrow.x2}
             y2={currentArrow.y2}
-            stroke="red"
+            stroke={currentArrow.color}
             strokeWidth="2"
           />
         )}
