@@ -11,21 +11,21 @@ const FBDCanvas: React.FC = () => {
     const svgX = e.clientX - svgRect.left;
     const svgY = e.clientY - svgRect.top;
 
-    // Check if the click is near the origin (Center of the SVG: 250, 200)
-    const originX = 250; // 500 / 2
-    const originY = 200; // 400 / 2
-    const tolerance = 20; // Tolerance for clicking the origin dot
+    // Check if the click is near the origin (50%, 50% of the SVG)
+    const originX = 250; // 500 /2
+    const originY = 200;  // 400 /2 
+    const tolerance = 10; // Tolerance for clicking the origin dot
 
-    console.log(`Mouse position: (${svgX.toFixed(2)}, ${svgY.toFixed(2)})`);
-    console.log(`Origin check: |${svgX} - ${originX}| < ${tolerance} AND |${svgY} - ${originY}| < ${tolerance}`);
+    //console.log(`Mouse position: (${svgX.toFixed(2)}, ${svgY.toFixed(2)})`);                                                                                                
+    //console.log(`Origin check: |${svgX} - ${originX}| < ${tolerance} AND |${svgY} - ${originY}| < ${tolerance}`);  
 
     if (Math.abs(svgX - originX) < tolerance && Math.abs(svgY - originY) < tolerance) {
-      console.log("Origin clicked. Starting drag.");
       setIsDragging(true);
       setStartPoint({ x: svgX, y: svgY });
       setCurrentArrow(null); // Clear previous arrow
-    } else {
-      console.log("Not origin clicked.");
+    }
+    else {
+      console.log("not within tolerance")
     }
   };
 
@@ -104,7 +104,7 @@ const FBDCanvas: React.FC = () => {
           />
         ))}
         {/* Origin dot at middle of grid */}
-        <circle cx="50%" cy="50%" r="10" fill="blue" />
+        <circle cx="50%" cy="50%" r="8" fill="blue" />
         {/* Dynamic Arrow Drawing */}
         {currentArrow && (
           <line
